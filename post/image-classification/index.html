@@ -1,0 +1,279 @@
+<!doctype html><html lang>
+<head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="In this project, we will build a convolution neural network in Keras with python on a CIFAR-10 dataset. Then, we will train and build our classification model and delopy it using streamlit and heroku."><title>Image Classification Model and Deployment</title>
+<link rel=canonical href=/post/image-classification/>
+<link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="Image Classification Model and Deployment">
+<meta property="og:description" content="In this project, we will build a convolution neural network in Keras with python on a CIFAR-10 dataset. Then, we will train and build our classification model and delopy it using streamlit and heroku.">
+<meta property="og:url" content="/post/image-classification/">
+<meta property="og:site_name" content>
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Machine Learning"><meta property="article:tag" content="Deep Learning"><meta property="article:tag" content="python"><meta property="article:tag" content="Deployment"><meta property="article:published_time" content="2021-11-25T00:00:00+00:00"><meta property="article:modified_time" content="2021-11-25T00:00:00+00:00"><meta property="og:image" content="/post/image-classification/image-class.png">
+<meta name=twitter:title content="Image Classification Model and Deployment">
+<meta name=twitter:description content="In this project, we will build a convolution neural network in Keras with python on a CIFAR-10 dataset. Then, we will train and build our classification model and delopy it using streamlit and heroku."><meta name=twitter:card content="summary_large_image">
+<meta name=twitter:image content="/post/image-classification/image-class.png">
+</head>
+<body class="article-page has-toc">
+<script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
+<div class="container main-container flex
+extended">
+<div id=article-toolbar>
+<a href=/ class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg>
+<span>Back</span>
+</a>
+</div>
+<main class="main full-width">
+<article class="has-image main-article">
+<header class=article-header>
+<div class=article-image>
+<a href=/post/image-classification/>
+<img src=/post/image-classification/image-class_huee56aaa2207ea536252c14d4d36b56db_947635_800x0_resize_box_3.png srcset="/post/image-classification/image-class_huee56aaa2207ea536252c14d4d36b56db_947635_800x0_resize_box_3.png 800w, /post/image-classification/image-class_huee56aaa2207ea536252c14d4d36b56db_947635_1600x0_resize_box_3.png 1600w" width=800 height=800 loading=lazy alt="Featured image of post Image Classification Model and Deployment">
+</a>
+</div>
+<div class=article-details>
+<header class=article-category>
+<a href=/categories/machine-learning/>
+Machine Learning
+</a>
+<a href=/categories/projects/>
+Projects
+</a>
+</header>
+<h2 class=article-title>
+<a href=/post/image-classification/>Image Classification Model and Deployment</a>
+</h2>
+<h3 class=article-subtitle>
+In this project, we will build a convolution neural network in Keras with python on a CIFAR-10 dataset. Then, we will train and build our classification model and delopy it using streamlit and heroku.
+</h3>
+<footer class=article-time>
+<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Nov 25, 2021</time>
+</div>
+<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>
+3 minute read
+</time>
+</div>
+</footer>
+</div>
+</header>
+<section class=article-content>
+<h1 id=image-classification-app>Image Classification App</h1>
+<p>In this project, we will build a convolution neural network in Keras with python on a CIFAR-10 dataset. Then, we will train and build our classification model and delopy it using streamlit and heroku. Please check out the full app here: <a class=link href=https://image-classify-app.herokuapp.com/ target=_blank rel=noopener>https://image-classify-app.herokuapp.com/</a>.</p>
+<h2 id=load-dataset>Load Dataset</h2>
+<p>We will be using the CIFAR-10 dataset that is already included in the keras datasets library:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py><span style=color:#f92672>from</span> tensorflow.keras.datasets <span style=color:#f92672>import</span> cifar10
+<span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#66d9ef>as</span> plt
+
+(x_train, y_train), (x_test, y_test) <span style=color:#f92672>=</span> cifar10<span style=color:#f92672>.</span>load_data()
+</code></pre></div><p>Check if images are loaded:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py>plt<span style=color:#f92672>.</span>figure(figsize<span style=color:#f92672>=</span>(<span style=color:#ae81ff>20</span>, <span style=color:#ae81ff>10</span>))
+<span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> range(<span style=color:#ae81ff>9</span>):
+    plt<span style=color:#f92672>.</span>subplot(<span style=color:#ae81ff>330</span><span style=color:#f92672>+</span><span style=color:#ae81ff>1</span><span style=color:#f92672>+</span>i)
+    plt<span style=color:#f92672>.</span>imshow(x_train[i])
+    plt<span style=color:#f92672>.</span>title(y_train[i])
+    plt<span style=color:#f92672>.</span>axis(<span style=color:#e6db74>&#39;off&#39;</span>)
+</code></pre></div><h2 id=data-processing>Data Processing</h2>
+<h3 id=load-libraries>Load Libraries</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py><span style=color:#f92672>from</span> keras.models <span style=color:#f92672>import</span> Sequential
+<span style=color:#f92672>from</span> keras.layers <span style=color:#f92672>import</span> Dense
+<span style=color:#f92672>from</span> keras.layers <span style=color:#f92672>import</span> Dropout
+<span style=color:#f92672>from</span> keras.layers <span style=color:#f92672>import</span> Flatten
+<span style=color:#f92672>from</span> keras.constraints <span style=color:#f92672>import</span> maxnorm
+<span style=color:#f92672>from</span> keras.optimizers <span style=color:#f92672>import</span> SGD
+<span style=color:#f92672>from</span> keras.layers.convolutional <span style=color:#f92672>import</span> Conv2D
+<span style=color:#f92672>from</span> keras.layers.convolutional <span style=color:#f92672>import</span> MaxPooling2D
+<span style=color:#f92672>from</span> keras.utils <span style=color:#f92672>import</span> np_utils
+</code></pre></div><h3 id=train-and-test-sets>Train and Test sets</h3>
+<p>Convert the pixel values of the dataset to float type and then normalize the dataset</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py>x_train <span style=color:#f92672>=</span> x_train<span style=color:#f92672>.</span>astype(<span style=color:#e6db74>&#39;float32&#39;</span>)
+x_test <span style=color:#f92672>=</span> x_test<span style=color:#f92672>.</span>astype(<span style=color:#e6db74>&#39;float32&#39;</span>)
+
+x_train <span style=color:#f92672>=</span> x_train <span style=color:#f92672>/</span> <span style=color:#ae81ff>255.0</span>
+x_test <span style=color:#f92672>=</span> x_test <span style=color:#f92672>/</span> <span style=color:#ae81ff>255.0</span>
+</code></pre></div><p>One-hot encoding for target classes</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py>y_train <span style=color:#f92672>=</span> np_utils<span style=color:#f92672>.</span>to_categorical(y_train)
+y_test <span style=color:#f92672>=</span> np_utils<span style=color:#f92672>.</span>to_categorical(y_test)
+
+num_classes <span style=color:#f92672>=</span> y_test<span style=color:#f92672>.</span>shape[<span style=color:#ae81ff>1</span>]
+</code></pre></div><h2 id=modeling>Modeling</h2>
+<p>Create the sequential model and add the layers</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py>model<span style=color:#f92672>=</span>Sequential()
+model<span style=color:#f92672>.</span>add(Conv2D(<span style=color:#ae81ff>32</span>,(<span style=color:#ae81ff>3</span>,<span style=color:#ae81ff>3</span>),input_shape<span style=color:#f92672>=</span>(<span style=color:#ae81ff>32</span>,<span style=color:#ae81ff>32</span>,<span style=color:#ae81ff>3</span>),
+    padding<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;same&#39;</span>,activation<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;relu&#39;</span>,
+    kernel_constraint<span style=color:#f92672>=</span>maxnorm(<span style=color:#ae81ff>3</span>)))
+model<span style=color:#f92672>.</span>add(Dropout(<span style=color:#ae81ff>0.2</span>))
+model<span style=color:#f92672>.</span>add(Conv2D(<span style=color:#ae81ff>32</span>,(<span style=color:#ae81ff>3</span>,<span style=color:#ae81ff>3</span>),activation<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;relu&#39;</span>,padding<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;same&#39;</span>,kernel_constraint<span style=color:#f92672>=</span>maxnorm(<span style=color:#ae81ff>3</span>)))
+model<span style=color:#f92672>.</span>add(MaxPooling2D(pool_size<span style=color:#f92672>=</span>(<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>2</span>)))
+model<span style=color:#f92672>.</span>add(Flatten())
+model<span style=color:#f92672>.</span>add(Dense(<span style=color:#ae81ff>512</span>,activation<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;relu&#39;</span>,kernel_constraint<span style=color:#f92672>=</span>maxnorm(<span style=color:#ae81ff>3</span>)))
+model<span style=color:#f92672>.</span>add(Dropout(<span style=color:#ae81ff>0.5</span>))
+model<span style=color:#f92672>.</span>add(Dense(num_classes, activation<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;softmax&#39;</span>))
+</code></pre></div><h3 id=optimizer-and-compile-model>Optimizer and Compile Model</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py>sgd <span style=color:#f92672>=</span> SGD(lr<span style=color:#f92672>=</span><span style=color:#ae81ff>0.01</span>, momentum<span style=color:#f92672>=</span><span style=color:#ae81ff>0.9</span>, decay<span style=color:#f92672>=</span>(<span style=color:#ae81ff>0.01</span><span style=color:#f92672>/</span><span style=color:#ae81ff>25</span>), nesterov<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>)
+
+model<span style=color:#f92672>.</span>compile(loss<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;categorical_crossentropy&#39;</span>, optimizer<span style=color:#f92672>=</span>sgd, metrics<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#39;accuracy&#39;</span>])
+</code></pre></div><h3 id=train-model>Train Model</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py>model<span style=color:#f92672>.</span>fit(x_train, y_train, validation_data<span style=color:#f92672>=</span>(x_test,y_test), epochs<span style=color:#f92672>=</span><span style=color:#ae81ff>25</span>, batch_size<span style=color:#f92672>=</span><span style=color:#ae81ff>32</span>)
+</code></pre></div><h3 id=check-accuracy>Check Accuracy</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py>acc <span style=color:#f92672>=</span> model<span style=color:#f92672>.</span>evaluate(x_test, y_test, verbose<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>)
+print(<span style=color:#e6db74>&#39;Test accuracy:&#39;</span>, acc[<span style=color:#ae81ff>1</span>])
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py>model<span style=color:#f92672>.</span>save(<span style=color:#e6db74>&#39;cifar10_model.h5&#39;</span>)
+</code></pre></div><h2 id=testing-model>Testing Model</h2>
+<p>Using <code>test.jpg</code> (airplane image), we will test to see if the model works</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py>results <span style=color:#f92672>=</span> {
+    <span style=color:#ae81ff>0</span>: <span style=color:#e6db74>&#39;airplane&#39;</span>,
+    <span style=color:#ae81ff>1</span>: <span style=color:#e6db74>&#39;automobile&#39;</span>,
+    <span style=color:#ae81ff>2</span>: <span style=color:#e6db74>&#39;bird&#39;</span>,
+    <span style=color:#ae81ff>3</span>: <span style=color:#e6db74>&#39;cat&#39;</span>,
+    <span style=color:#ae81ff>4</span>: <span style=color:#e6db74>&#39;deer&#39;</span>,
+    <span style=color:#ae81ff>5</span>: <span style=color:#e6db74>&#39;dog&#39;</span>,
+    <span style=color:#ae81ff>6</span>: <span style=color:#e6db74>&#39;frog&#39;</span>,
+    <span style=color:#ae81ff>7</span>: <span style=color:#e6db74>&#39;horse&#39;</span>,
+    <span style=color:#ae81ff>8</span>: <span style=color:#e6db74>&#39;ship&#39;</span>,
+    <span style=color:#ae81ff>9</span>: <span style=color:#e6db74>&#39;truck&#39;</span>
+}
+
+<span style=color:#f92672>from</span> PIL <span style=color:#f92672>import</span> Image
+<span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span> np
+img <span style=color:#f92672>=</span> Image<span style=color:#f92672>.</span>open(<span style=color:#e6db74>&#39;test.jpg&#39;</span>)
+img <span style=color:#f92672>=</span> img<span style=color:#f92672>.</span>resize((<span style=color:#ae81ff>32</span>, <span style=color:#ae81ff>32</span>))
+img <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array(img)
+img <span style=color:#f92672>=</span> img<span style=color:#f92672>.</span>astype(<span style=color:#e6db74>&#39;float32&#39;</span>)
+img <span style=color:#f92672>=</span> img <span style=color:#f92672>/</span> <span style=color:#ae81ff>255.0</span>
+img <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>expand_dims(img, axis<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>)
+pred <span style=color:#f92672>=</span> model<span style=color:#f92672>.</span>predict(img)
+print(pred, <span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,  results[np<span style=color:#f92672>.</span>argmax(pred)])
+</code></pre></div><p>Output:</p>
+<pre tabindex=0><code>[[9.9999976e-01 6.2572963e-10 5.3366811e-08 1.9468609e-10 2.0309849e-07
+  3.6830453e-10 5.5412207e-12 2.0695565e-12 8.1430986e-09 1.1587767e-12]] 
+ airplane
+</code></pre><p>The Model works!</p>
+<h1 id=building-streamlit-app>Building Streamlit App</h1>
+<p>Using the model we saved called <code>cifar10_model.h5</code>, we will build an interactive app using streamlit. Learn more about streamlit <a class=link href=https://docs.streamlit.io/ target=_blank rel=noopener>here</a>.</p>
+<h3 id=apppy>app.py</h3>
+<p>This will be the main file used to run the app. Please take a look in the <a class=link href=https://github.com/Harmeetrai/image-classification/blob/main/app.py target=_blank rel=noopener>github repo</a>.</p>
+<h3 id=setupsh>setup.sh</h3>
+<p>This is the setup file for heroku:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>mkdir -p ~/.streamlit/
+echo <span style=color:#e6db74>&#34;\
+</span><span style=color:#e6db74>[server]\n\
+</span><span style=color:#e6db74>headless = true\n\
+</span><span style=color:#e6db74>port = </span>$PORT<span style=color:#e6db74>\n\
+</span><span style=color:#e6db74>enableCORS = false\n\
+</span><span style=color:#e6db74>\n\
+</span><span style=color:#e6db74>&#34;</span> &gt; ~/.streamlit/config.toml
+</code></pre></div><h3 id=procfile>Procfile</h3>
+<pre tabindex=0><code>web: sh setup.sh &amp;&amp; streamlit run app.py
+</code></pre><h3 id=requirementstxt>Requirements.txt</h3>
+<p>You will need a separate requirements.txt file that is dedicated to streamlit:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>streamlit
+Pillow==8.3.2
+tensorflow-cpu
+numpy
+pytest-shutil
+</code></pre></div><h3 id=deploy-to-heroku>Deploy to Heroku</h3>
+<p>Now deploy the code to <a class=link href=https://heroku.com/ target=_blank rel=noopener>Heroku</a>. This can be done by first deploying to github and linking your github repo to Heroku.</p>
+<h1 id=credit>Credit</h1>
+<p>Special thanks to <a class=link href=https://data-flair.training/blogs/image-classification-deep-learning-project-python-keras/ target=_blank rel=noopener>this</a> blog post for the inspiration:</p>
+</section>
+<footer class=article-footer>
+<section class=article-tags>
+<a href=/tags/machine-learning/>Machine Learning</a>
+<a href=/tags/deep-learning/>Deep Learning</a>
+<a href=/tags/python/>python</a>
+<a href=/tags/deployment/>Deployment</a>
+</section>
+</footer>
+</article>
+<aside class=related-contents--wrapper>
+</aside>
+<footer class=site-footer>
+<section class=copyright>
+&copy;
+2021
+</section>
+<section class=powerby>
+Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
+Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.5.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a>
+</section>
+</footer>
+<div class=pswp tabindex=-1 role=dialog aria-hidden=true>
+<div class=pswp__bg></div>
+<div class=pswp__scroll-wrap>
+<div class=pswp__container>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class=pswp__top-bar>
+<div class=pswp__counter></div>
+<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class=pswp__preloader>
+<div class=pswp__preloader__icn>
+<div class=pswp__preloader__cut>
+<div class=pswp__preloader__donut></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class=pswp__share-tooltip></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+</button>
+<div class=pswp__caption>
+<div class=pswp__caption__center></div>
+</div>
+</div>
+</div>
+</div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous>
+</main>
+<aside class="sidebar right-sidebar sticky">
+<section class="widget archives">
+<div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg>
+</div>
+<h2 class="widget-title section-title">Table of contents</h2>
+<div class=widget--toc>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#load-dataset>Load Dataset</a></li>
+<li><a href=#data-processing>Data Processing</a>
+<ul>
+<li><a href=#load-libraries>Load Libraries</a></li>
+<li><a href=#train-and-test-sets>Train and Test sets</a></li>
+</ul>
+</li>
+<li><a href=#modeling>Modeling</a>
+<ul>
+<li><a href=#optimizer-and-compile-model>Optimizer and Compile Model</a></li>
+<li><a href=#train-model>Train Model</a></li>
+<li><a href=#check-accuracy>Check Accuracy</a></li>
+</ul>
+</li>
+<li><a href=#testing-model>Testing Model</a></li>
+</ul>
+<ul>
+<li>
+<ul>
+<li><a href=#apppy>app.py</a></li>
+<li><a href=#setupsh>setup.sh</a></li>
+<li><a href=#procfile>Procfile</a></li>
+<li><a href=#requirementstxt>Requirements.txt</a></li>
+<li><a href=#deploy-to-heroku>Deploy to Heroku</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+</section>
+</aside>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous defer></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script>
+</body>
+</html>
