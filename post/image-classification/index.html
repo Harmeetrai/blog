@@ -12,7 +12,7 @@
 <meta name=twitter:image content="/post/image-classification/image-class.png">
 </head>
 <body class="article-page has-toc">
-<script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
+<script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"dark")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
 <div class="container main-container flex
 extended">
 <div id=article-toolbar>
@@ -147,7 +147,7 @@ print(pred, <span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</
   3.6830453e-10 5.5412207e-12 2.0695565e-12 8.1430986e-09 1.1587767e-12]] 
  airplane
 </code></pre><p>The Model works!</p>
-<h1 id=building-streamlit-app>Building Streamlit App</h1>
+<h2 id=building-streamlit-app>Building Streamlit App</h2>
 <p>Using the model we saved called <code>cifar10_model.h5</code>, we will build an interactive app using streamlit. Learn more about streamlit <a class=link href=https://docs.streamlit.io/ target=_blank rel=noopener>here</a>.</p>
 <h3 id=apppy>app.py</h3>
 <p>This will be the main file used to run the app. Please take a look in the <a class=link href=https://github.com/Harmeetrai/image-classification/blob/main/app.py target=_blank rel=noopener>github repo</a>.</p>
@@ -256,9 +256,7 @@ Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=
 </ul>
 </li>
 <li><a href=#testing-model>Testing Model</a></li>
-</ul>
-<ul>
-<li>
+<li><a href=#building-streamlit-app>Building Streamlit App</a>
 <ul>
 <li><a href=#apppy>app.py</a></li>
 <li><a href=#setupsh>setup.sh</a></li>

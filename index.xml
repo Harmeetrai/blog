@@ -85,7 +85,7 @@ print(pred, &lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="co
 3.6830453e-10 5.5412207e-12 2.0695565e-12 8.1430986e-09 1.1587767e-12]]
 airplane
 &lt;/code>&lt;/pre>&lt;p>The Model works!&lt;/p>
-&lt;h1 id="building-streamlit-app">Building Streamlit App&lt;/h1>
+&lt;h2 id="building-streamlit-app">Building Streamlit App&lt;/h2>
 &lt;p>Using the model we saved called &lt;code>cifar10_model.h5&lt;/code>, we will build an interactive app using streamlit. Learn more about streamlit &lt;a class="link" href="https://docs.streamlit.io/" target="_blank" rel="noopener"
 >here&lt;/a>.&lt;/p>
 &lt;h3 id="apppy">app.py&lt;/h3>
