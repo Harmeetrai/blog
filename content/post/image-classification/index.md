@@ -137,7 +137,7 @@ Output:
 ```
 The Model works!
 
-# Building Streamlit App
+## Building Streamlit App
 Using the model we saved called `cifar10_model.h5`, we will build an interactive app using streamlit. Learn more about streamlit [here](https://docs.streamlit.io/).
 
 ### app.py

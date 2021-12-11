@@ -22,7 +22,7 @@ params:
         emoji:
         subtitle:
         avatar:
-            enabled: true
+            enabled: false
             local: true
             src: img/avatar.png
 
@@ -138,7 +138,7 @@ params:
         toggle: true
 
         # Available values: auto, light, dark
-        default: auto
+        default: dark
 
     imageProcessing:
         cover:
